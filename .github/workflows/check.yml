@@ -1,0 +1,46 @@
+name: Check
+
+# Compiles and tests without publishing anything.
+#
+# A push to the default branch cuts a real release (see build.yml), so the default branch
+# is a bad place to discover something doesn't compile. Every other branch runs this
+# instead -- the same build minus signing, the release, and the fingerprint check. This is
+# also the workflow a throwaway branch is pushed to verify against before ever touching
+# the default branch, since the development sandbox for this repo cannot run a full
+# Android build itself (aapt2 is x86_64-only; the sandbox is aarch64).
+#
+# Deliberately debug-only: the release signingConfig reads RELEASE_STORE_PASSWORD /
+# RELEASE_KEY_ALIAS / RELEASE_KEY_PASSWORD from the environment (see app/build.gradle.kts
+# and build.yml), and this workflow never sets them, so assembleRelease would fail here
+# for a reason that has nothing to do with whether the code compiles. Debug always builds
+# with the auto-generated debug keystore and needs no secret at all.
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Unit tests
+        run: ./gradlew :app:testDebugUnitTest --stacktrace
+
+      - name: Compile
+        run: ./gradlew :app:assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: LightOCR-check-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

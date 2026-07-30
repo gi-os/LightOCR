@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- The 45ms lightClickable buzz on finger-down, same as every sibling Light* app. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!--
+        No storage permission of any kind. The photo picker is the Storage Access
+        Framework's document picker (ACTION_OPEN_DOCUMENT), which hands back a scoped
+        content:// Uri with no runtime permission dialog — the right choice on a phone
+        with no Google Play Services, since the Android Photo Picker's implementation on
+        some OS builds depends on a Play-services-delivered module this device doesn't have.
+    -->
+
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LightOCR">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.LightOCR">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
