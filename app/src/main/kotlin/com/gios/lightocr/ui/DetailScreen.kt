@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,7 +52,7 @@ fun DetailScreen(vm: ScanViewModel, scanId: String, onBack: () -> Unit) {
 }
 
 @Composable
-private fun DetailBody(scan: ScanEntity, thumbnailFile: java.io.File, onCopy: () -> Unit) {
+private fun ColumnScope.DetailBody(scan: ScanEntity, thumbnailFile: java.io.File, onCopy: () -> Unit) {
     Column(
         Modifier
             .weight(1f, fill = true)
