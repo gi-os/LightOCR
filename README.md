@@ -1,3 +1,42 @@
+> [!IMPORTANT]
+> # Deprecated — this is part of Roll now
+>
+> **Reading text out of a photograph has moved into
+> [gi-os/LightCamera](https://github.com/gi-os/LightCamera)** (launcher label **Roll**), and this
+> repository is no longer developed. Roll replaces both the stock Camera and Album on the LPIII, so
+> the camera it needed was already open and the photographs it wanted to read were already in front
+> of you.
+>
+> It arrived in two pieces:
+>
+> - **v2.40 — a TEXT button on any photograph on the roll.** Same bundled
+>   `com.google.mlkit:text-recognition` this app used, for the same reason: the model ships inside
+>   the APK, where the unbundled variant would ask Play Services for it and never finish.
+> - **v2.41 — TEXT as a capture mode**, one turn of the wheel past QR. The frame comes off the
+>   panel rather than the sensor, so there is no shutter lag at all; if that frame turns out too
+>   coarse for the print, it takes one real exposure and reads that instead. Nothing lands on the
+>   roll — a reading is not a photograph.
+>
+> **What Roll does that this did not:**
+>
+> - **The findings are shaped like QR payloads**, so a phone number photographed off a business
+>   card gets the same sheet and the same verbs as one inside a QR code — call it, write to it,
+>   open it. Everything that decides what a payload *is* was already written and tested for QR
+>   mode, so text got it for free.
+> - **v2.43 draws the boxes on the frame**, so you can see which line said what before you commit
+>   to anything. Lines carrying something worth pressing are marked differently from lines that are
+>   just words.
+> - **Nothing is spell-corrected.** `O`/`0` and `l`/`1` are most of the difference between a
+>   company's website and a domain bought to catch the typo, so the reading is shown as it was
+>   read.
+>
+> **Not carried over:** the scan history with its thumbnails, and the SAF document picker for a
+> file outside the media store. Roll lists every image on the device by default rather than only
+> `DCIM`, so an ordinary photograph is still reachable — a file the media store does not know about
+> is not.
+>
+> The APK on the releases page keeps working. It simply will not be updated again.
+
 # LightOCR (Scanner)
 
 A plain sideloaded Android app for the Light Phone III that reads text out of photos.
